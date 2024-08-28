@@ -21,7 +21,7 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint src/*.js",
     "start": "node src/index.js",
-    "test": "mocha"
+    "test": "mocha --exit true"
   },
   "repository": {
     "type": "git",
