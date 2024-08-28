@@ -2,28 +2,24 @@ name: Demo CI
 
 on:
   push:
-    paths:
-      - '!README.md'
-      - '!LICENSE'
+    branches: ['main']
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
   pull_request:
-    branches:
-      - main
-  workflow_run:
-    workflows: ["build"]
-    types: [requested]
-    branches:
-      - 'main'
-
+    branches: ['main']
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 3
-
     steps:
       - uses: actions/checkout@v4.1.7
       - name: Use Node.js 18
