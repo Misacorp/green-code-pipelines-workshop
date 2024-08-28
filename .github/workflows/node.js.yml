@@ -1,9 +1,28 @@
 name: Demo CI
 
-on: push
+on:
+  push:
+    paths:
+      - '!README.md'
+      - '!LICENSE'
+  pull_request:
+    branches:
+      - main
+  workflow_run:
+    workflows: ["build"]
+    types: [requested]
+    branches:
+      - 'main'
+
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 3
 
     steps:
       - uses: actions/checkout@v4.1.7
